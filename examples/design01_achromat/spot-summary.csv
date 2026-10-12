@@ -1,0 +1,12 @@
+﻿"analysis","quantity","group","series","xLabel","xMin","xMax","yMin","yMax","yLast","r50_um","r80_um","r90_um"
+"RMSField","RMS 波前误差 vs 视场","Field is oriented along the +y direction.","Poly","Field","0","0.5","0.056295","0.059312","0.059312",,,
+"RMSField","RMS 波前误差 vs 视场","Field is oriented along the +y direction.","0.4861","Field","0","0.5","0.014769","0.021348","0.02078",,,
+"RMSField","RMS 波前误差 vs 视场","Field is oriented along the +y direction.","0.5876","Field","0","0.5","0.058966","0.081603","0.081603",,,
+"RMSField","RMS 波前误差 vs 视场","Field is oriented along the +y direction.","0.6563","Field","0","0.5","0.057462","0.075695","0.057462",,,
+"RMSField","RMS 点列半径 vs 视场","Field is oriented along the +y direction.","Poly","Field","0","0.5","1.783454","1.835893","1.835893",,,
+"RMSField","RMS 点列半径 vs 视场","Field is oriented along the +y direction.","0.4861","Field","0","0.5","0.992801","1.343782","0.992801",,,
+"RMSField","RMS 点列半径 vs 视场","Field is oriented along the +y direction.","0.5876","Field","0","0.5","2.007261","2.64452","2.64452",,,
+"RMSField","RMS 点列半径 vs 视场","Field is oriented along the +y direction.","0.6563","Field","0","0.5","1.451307","1.971534","1.451307",,,
+"GeometricEncircledEnergy","几何包围能量 vs 半径","0.0000 (deg)","Fraction","Radial distance","0","9.974747","0","0.942281","0.942281","2.207754","2.962856","5.777915"
+"GeometricEncircledEnergy","几何包围能量 vs 半径","0.2500 (deg)","Fraction","Radial distance","0","9.974747","0","0.942281","0.942281","2.168576","3.143011","5.777869"
+"GeometricEncircledEnergy","几何包围能量 vs 半径","0.5000 (deg)","Fraction","Radial distance","0","9.974747","0","0.942282","0.942282","2.047972","3.695075","5.777686"

@@ -1,0 +1,26 @@
+{
+  "_comment": "DSH <-> Ansys Zemax OpticStudio 桥接的路径配置模板。install.ps1 会自动检测并写出真正的 config.json；这份 example 用于手工安装或对照字段含义。可用环境变量 ZEMAX_CONFIG 指向另一份配置，用 ZEMAX_OUTPUT_ROOT / ZEMAX_SCRATCH_ROOT 单独覆盖输出根。",
+
+  "outputRoot": "<工作区>\\Zemax\\runs",
+  "scratchRoot": "<工作区>\\Zemax\\scratch",
+
+  "zemaxInstall": "<OpticStudio 安装目录，例如 E:\\Ansys Zemax>",
+  "zosApiHelper": "<Documents>\\Zemax\\ZOS-API\\Libraries\\ZOSAPI_NetHelper.dll",
+  "samplesDir": "<Documents>\\Zemax\\SAMPLES",
+
+  "pythonExe": "<DSH 自带 Python 的 python.exe；留空则跳过 Excel/Word 生成>",
+  "windowsPowerShell": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+
+  "analysis": {
+    "mtfMaxFrequency": 100.0,
+    "mtfFreqs": [ 30.0, 50.0, 100.0 ],
+    "mtfSampleSize": 0,
+    "spotFieldNumber": 0,
+    "copyInputFile": true
+  },
+
+  "limits": {
+    "analysisTimeoutSeconds": 600,
+    "maxSeriesPoints": 20000
+  }
+}

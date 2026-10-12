@@ -1,0 +1,6 @@
+﻿"surface","type","comment","radius","thickness","material","semiDiameter","conic","isStop"
+"0","Standard","",,,"",,"0","False"
+"1","Standard","crown front (N-BK7)","61.39926754","15.00000007","N-BK7","11","0","True"
+"2","Standard","cemented interface (N-SF5)","-41.783377837","7.195940432","N-SF5","10","0","False"
+"3","Standard","flint back -> image","-120.361786053","89.515773562","","10","0","False"
+"4","Standard","",,,"","0.876410792","0","False"

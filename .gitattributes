@@ -1,0 +1,18 @@
+# 统一换行，避免 Windows/Linux 检出差异
+* text=auto eol=lf
+
+# PowerShell 脚本在 Windows 上按 CRLF 更稳妥（内容本身带 UTF-8 BOM，git 不会动 BOM）
+*.ps1 text eol=crlf
+
+*.py   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.csv  text eol=lf
+*.txt  text eol=lf
+
+# Zemax 镜头文件 / 附件是二进制（.zos 本质是 zip 容器），绝不能让 git 做文本转换
+*.zos binary
+*.ZDA binary
+*.zmx text eol=crlf
+*.zrd binary
+*.zbf binary

@@ -1,0 +1,71 @@
+{
+  "name": "Design01_Achromatic_Objective_100mm_f5",
+  "notes": "第一次简单光学仪器设计：可见光消色差双胶合物镜（望远镜/准直物镜级别）。起始半径由薄透镜消色差理论给出：N-BK7(nd=1.51680,Vd=64.17) 与 N-SF5(nd=1.67270,Vd=32.25)，总光焦度 1/100，按 φ1/V1 + φ2/V2 = 0 解出 f1≈49.74、f2≈-98.98；取胶合面 r2=-45 mm，由 1/f = (n-1)(1/r1 - 1/r2) 反解 r1≈59.97、r3≈-138.8。之后由局部优化 + 锤形优化收敛。迭代过程：第 1 轮（评价函数 = 默认 RMS 光斑 + EFFL）得到最佳焦点色差很小（F–C 约 0.011 mm、跨度约 0.052 mm）而近轴色差较大（AXCL 约 0.076 mm）；第 2 轮把 AXCL(target=0, weight=10) 加进评价函数，近轴色差被压到 2.5e-5 mm，但最佳焦点色差反而恶化到 F–C 0.062 mm、跨度 0.093 mm，且 MTF@50 从 0.771 降到 0.725、轴上 RMS 点列从 1.80 µm 升到 2.85 µm（第 2 轮留档在 iter2_axcl_weighted/）。结论：这是个真实权衡——近轴消色差不等于成像消色差。本设计按'成像优先'定稿采用第 1 轮，近轴色差作为有参考标定的诊断带（判据 ≤0.10 mm，参考经典双胶合样例 Doublet 实测 0.126 mm），硬判据放在成像指标与最佳焦点色差上。",
+  "catalog": "SCHOTT",
+
+  "aperture": { "type": "EntrancePupilDiameter", "value": 20.0 },
+  "fields": { "type": "Angle", "values": [0.0, 0.25, 0.5] },
+  "wavelengths": { "preset": "FdC_Visible" },
+
+  "surfaces": [
+    { "index": 1, "radius": 59.97, "thickness": 6.0, "material": "N-BK7", "semiDiameter": 11.0, "comment": "crown front (N-BK7)" },
+    { "index": 2, "radius": -45.0, "thickness": 3.0, "material": "N-SF5", "semiDiameter": 10.0, "comment": "cemented interface (N-SF5)" },
+    { "index": 3, "radius": -138.8, "thickness": 92.0, "material": "", "semiDiameter": 10.0, "comment": "flint back -> image" }
+  ],
+
+  "variables": [
+    { "surface": 1, "cell": "Radius" },
+    { "surface": 2, "cell": "Radius" },
+    { "surface": 3, "cell": "Radius" },
+    { "surface": 1, "cell": "Thickness" },
+    { "surface": 2, "cell": "Thickness" },
+    { "surface": 3, "cell": "Thickness" }
+  ],
+
+  "merit": {
+    "wizard": {
+      "data": 1,
+      "ring": 2,
+      "overallWeight": 1,
+      "glassUsed": true, "glassMin": 3.0, "glassMax": 15.0, "glassEdge": 3.0,
+      "airUsed": true, "airMin": 0.5, "airMax": 1000.0, "airEdge": 0.5
+    },
+    "operands": [
+      { "type": "EFFL", "target": 100.0, "weight": 10.0 }
+    ]
+  },
+
+  "optimize": {
+    "local": { "algorithm": "DampedLeastSquares", "cycles": "Automatic", "cores": 4 },
+    "hammerSeconds": 8,
+    "quickFocus": true,
+    "quickFocusCriterion": "SpotSizeRadial"
+  },
+
+  "save": { "fileName": "achromat_100mm_f5.zos" },
+
+  "metrics": [
+    { "name": "efl",    "operand": "EFFL", "unit": "mm", "label": "有效焦距 EFL" },
+    { "name": "efl_f",  "operand": "EFFL", "wave": 1, "unit": "mm", "label": "EFL @ F 线 0.486 µm" },
+    { "name": "efl_d",  "operand": "EFFL", "wave": 2, "unit": "mm", "label": "EFL @ d 线 0.588 µm" },
+    { "name": "efl_c",  "operand": "EFFL", "wave": 3, "unit": "mm", "label": "EFL @ C 线 0.656 µm" },
+    { "name": "axcl",   "operand": "AXCL", "unit": "mm", "label": "轴向色差（F–C 焦点差）" },
+    { "name": "wfno",   "operand": "WFNO", "unit": "",   "label": "像方 F 数" }
+  ],
+
+  "acceptance": [
+    { "metric": "efl",                      "min": 99.5,  "max": 100.5, "unit": "mm",    "label": "有效焦距 EFL 100 ± 0.5 mm" },
+    { "metric": "wfno",                     "min": 4.9,   "max": 5.15,  "unit": "",      "label": "像方 F 数 5.0 ± 0.15" },
+    { "metric": "axcl",                     "min": -0.10, "max": 0.10,  "unit": "mm",    "label": "近轴轴向色差 AXCL ≤ 0.10 mm（诊断带，按参考镜头标定：经典 BK7/F2 双胶合样例 Doublet 实测 0.126 mm）" },
+    { "metric": "axial_color_paraxial_fc_mm",   "min": -0.10, "max": 0.10, "unit": "mm", "label": "纵向像差曲线 x=0 得到的近轴 F–C ≤ 0.10 mm（与 AXCL 互为独立验证；二者实测一致，符号相反）" },
+    { "metric": "axial_color_paraxial_span_mm", "max": 0.10,               "unit": "mm", "label": "近轴焦点跨度 ≤ 0.10 mm（纵向像差曲线 x=0）" },
+    { "metric": "focus_shift_fc_mm",        "min": -0.03, "max": 0.03,  "unit": "mm",    "label": "逐波长最佳焦点 F–C ≤ ±0.03 mm（参考样例 −0.019 mm）" },
+    { "metric": "focus_span_mm",            "max": 0.06,                "unit": "mm",    "label": "各波长最佳焦点跨度 ≤ 0.06 mm，即二次光谱量级（参考样例 0.0537 mm）" },
+    { "metric": "rms_wavefront_axis_poly",  "max": 0.10,                "unit": "waves", "label": "轴上 RMS 波前 ≤ 0.10λ" },
+    { "metric": "rms_spot_axis_poly",       "max": 3.6,                 "unit": "µm",    "label": "轴上 RMS 点列半径 ≤ 3.6 µm（≈Airy 半径 3.58 µm @F/5, d 线）" },
+    { "metric": "rms_spot_worst",           "max": 8.0,                 "unit": "µm",    "label": "最差视场 RMS 点列半径 ≤ 8 µm" },
+    { "metric": "mtf_axis_tan",             "min": 0.60,                "unit": "",      "label": "轴上 MTF@50 lp/mm（切向）≥ 0.60" },
+    { "metric": "mtf_worst_tan",            "min": 0.35,                "unit": "",      "label": "最差视场 MTF@50 lp/mm（切向）≥ 0.35" },
+    { "metric": "r80_axis",                 "max": 6.0,                 "unit": "µm",    "label": "轴上 80% 包围能量半径 ≤ 6 µm" }
+  ]
+}

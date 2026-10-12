@@ -1,0 +1,31 @@
+# 运行产物：绝不入库（每次调用都会新建时间戳目录）
+Zemax/runs/
+Zemax/scratch/
+runs/
+scratch/
+
+# 本机路径配置（含个人机器路径，由 install.ps1 生成）
+Zemax/config.json
+config.json
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 大体积中间产物（Zemax 射线数据库 / 光束文件等，可达 GB 级）
+*.zrd
+*.zbf
+*.ZRD
+*.ZBF
